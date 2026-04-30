@@ -1,0 +1,12 @@
+{
+  "name": "resort-map",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["backend", "frontend"],
+  "scripts": {
+    "test": "npm run test -w backend && npm run test -w frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
