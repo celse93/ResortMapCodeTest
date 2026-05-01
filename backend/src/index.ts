@@ -2,7 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import { parseArgs } from 'util';
 import path from 'path';
-import { createMapRouter } from './routes/map.js';
+import { getMapRouter } from './routes/map.js';
+import { getBookingsRouter } from './routes/bookings.js';
+import { createBookingRouter } from './routes/createBooking.js';
+import { loadGuests } from './validation.js';
 
 const { values } = parseArgs({
   options: {
@@ -14,11 +17,16 @@ const { values } = parseArgs({
 const mapPath = path.resolve(values.map!);
 const bookingsPath = path.resolve(values.bookings!);
 
+const guests = loadGuests(bookingsPath);
+const cabanaBookings = new Map<string, { room: string; guestName: string }>();
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api', createMapRouter(mapPath));
+app.use('/api', getMapRouter(mapPath));
+app.use('/api', getBookingsRouter(bookingsPath));
+app.use('/api', createBookingRouter(guests, cabanaBookings));
 
 const PORT = process.env.PORT ?? 3001;
 app.listen(PORT, () => {

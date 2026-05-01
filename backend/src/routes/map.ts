@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { parseMap } from '../mapParser.js';
 
-export function createMapRouter(mapPath: string): Router {
+export function getMapRouter(mapPath: string): Router {
   const router = Router();
   const mapData = parseMap(mapPath);
 
