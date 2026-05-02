@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Interactive cabana booking webapp for a resort. **No implementation exists yet — this is a specification + assets repo.** Languages allowed: **TypeScript** only. This project must be kept simple by avoiding over-engineering. No real auth or persistent storage required—in-memory. Session state for cabana bookings is enough. 
+Interactive cabana booking webapp for a resort. **No implementation exists yet — this is a specification + assets repo.** Languages allowed: **TypeScript** only. This project must be kept simple by avoiding over-engineering.
 
 ## Architecture
 
