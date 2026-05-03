@@ -20,9 +20,12 @@ const bookingsPath = path.resolve(values.bookings!);
 const guests = loadGuests(bookingsPath);
 const cabanaBookings = new Map<string, { room: string; guestName: string }>();
 
+const assetsPath = path.resolve(path.dirname(mapPath), 'assets');
+
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/assets', express.static(assetsPath));
 
 app.use('/api', getMapRouter(mapPath));
 app.use('/api', getBookingsRouter(bookingsPath));

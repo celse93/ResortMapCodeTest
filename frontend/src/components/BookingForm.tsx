@@ -3,7 +3,7 @@ import type { Cell } from '../types/map';
 
 interface BookingFormProps {
   cell: Cell;
-  onSuccess: (cabanaId: string) => void;
+  onSuccess: (cabanaId: string, room: string, guestName: string) => void;
   onCancel: () => void;
 }
 
@@ -26,7 +26,7 @@ export function BookingForm({ cell, onSuccess, onCancel }: BookingFormProps) {
       });
 
       if (res.ok) {
-        onSuccess(cell.id!);
+        onSuccess(cell.id!, room, guestName);
       } else {
         const data = await res.json();
         setError(data.error ?? 'Booking failed');

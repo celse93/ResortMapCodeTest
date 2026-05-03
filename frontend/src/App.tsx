@@ -1,35 +1,76 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import { MapGrid } from './components/MapGrid';
+import { BookingForm } from './components/BookingForm';
+import { CabanaStatus } from './components/CabanaStatus';
+import type { Cell, MapData, CabanaBooking } from './types/map';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [mapData, setMapData] = useState<MapData | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [bookedCabanas, setBookedCabanas] = useState<Map<string, CabanaBooking>>(new Map());
+  const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
+
+  useEffect(() => {
+    fetch('/api/map')
+      .then((res) => res.json())
+      .then((data: MapData) => setMapData(data))
+      .catch(() => setLoadError('Failed to load resort map'));
+  }, []);
+
+  function handleCabanaClick(cell: Cell) {
+    setSelectedCell(cell);
+  }
+
+  function handleBookingSuccess(cabanaId: string, room: string, guestName: string) {
+    setBookedCabanas((prev) => {
+      const next = new Map(prev);
+      next.set(cabanaId, { room, guestName });
+      return next;
+    });
+    setSelectedCell(null);
+  }
+
+  function handleClose() {
+    setSelectedCell(null);
+  }
+
+  if (loadError) {
+    return <p role="alert">{loadError}</p>;
+  }
+
+  if (!mapData) {
+    return <p>Loading map…</p>;
+  }
+
+  const isBooked = selectedCell?.id !== undefined && bookedCabanas.has(selectedCell.id);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      <h1>Resort Cabana Map</h1>
+      <MapGrid
+        grid={mapData.grid}
+        bookedCabanas={bookedCabanas}
+        onCabanaClick={handleCabanaClick}
+      />
+      {selectedCell && (
+        <div className="overlay" onClick={handleClose}>
+          <div className="panel" onClick={(e) => e.stopPropagation()}>
+            {isBooked ? (
+              <CabanaStatus
+                booking={bookedCabanas.get(selectedCell.id!)!}
+                onClose={handleClose}
+              />
+            ) : (
+              <BookingForm
+                cell={selectedCell}
+                onSuccess={handleBookingSuccess}
+                onCancel={handleClose}
+              />
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
-
-export default App
