@@ -44,7 +44,22 @@ JSON array of `{ "room": "101", "guestName": "Alice Smith" }`. 100 guests across
 | `pool.png` | Pool tile |
 | `houseChimney.png` | Chalet tile |
 | `textureWater.png` | Water/overlay |
-| `arrowStraight/Corner/Crossing/Split/End.png` | Path direction tiles |
+| `arrowStraight/Corner/Crossing/Split/End.png` | Path direction tiles (see selection rules below) |
+
+### Path tile selection
+
+Each `#` cell picks its asset and a CSS clockwise rotation by inspecting its four cardinal neighbours. A neighbour is **connected** when it is `#`, `W`, or `c`; it is **empty** when it is `.`, `p`, or out-of-bounds.
+
+| Connected count | Extra condition | Asset | Rotation |
+|---|---|---|---|
+| 4 | — | `arrowCrossing.png` | 0° |
+| 3 | 1 empty side | `arrowSplit.png` | empty side → top: 90° · right: 180° · bottom: 270° · left: 0° |
+| 2 | top + down (opposite) | `arrowStraight.png` | 0° (vertical) |
+| 2 | left + right (opposite) | `arrowStraight.png` | 90° (horizontal) |
+| 2 | adjacent pair | `arrowCornerSquare.png` | N+E: 0° · E+S: 90° · S+W: 180° · W+N: 270° |
+| 1 | dead end | `arrowEnd.png` | connected side → bottom: 0° · left: 90° · top: 180° · right: 270° |
+
+Base image orientations (0°): `arrowStraight` is vertical; `arrowCornerSquare` connects top+right (bend at tile's bottom-left); `arrowSplit` is ├ (left side open); `arrowEnd` tip points up with connection at bottom.
 
 ## Required Deliverables
 

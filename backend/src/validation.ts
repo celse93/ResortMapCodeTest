@@ -14,5 +14,7 @@ export function isValidGuest(
   room: string,
   guestName: string,
 ): boolean {
-  return guests.some((g) => g.room === room && g.guestName === guestName);
+  return guests.some(
+    (g) => g.room === room && g.guestName.toLowerCase() === guestName.toLowerCase(),
+  );
 }

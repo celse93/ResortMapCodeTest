@@ -70,6 +70,17 @@ describe('POST /api/bookings', () => {
     expect(body).toEqual({ error: 'Invalid guest' });
   });
 
+  it('accepts a valid guest with differently-cased name', async () => {
+    const res = await fetch(`${baseUrl}/api/bookings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cabanaId: 'W-4', room: '102', guestName: 'BOB JONES' }),
+    });
+    expect(res.status).toBe(201);
+    const body = await res.json();
+    expect(body).toEqual({ success: true });
+  });
+
   it('allows different cabanas to be booked by different valid guests', async () => {
     const res = await fetch(`${baseUrl}/api/bookings`, {
       method: 'POST',

@@ -47,3 +47,34 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
 }
+
+/* ── MapGrid ── */
+
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 48px);
+  width: fit-content;
+}
+
+.map-cell {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.map-tile {
+  display: block;
+  cursor: default;
+  transform: rotate(var(--rotation, 0deg));
+}
+
+.map-tile--cabana {
+  cursor: pointer;
+}
+
+.booked-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(200, 0, 0, 0.55);
+  pointer-events: none;
+}
