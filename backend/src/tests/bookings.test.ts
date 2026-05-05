@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import express from 'express';
 import path from 'path';
-import { getBookingsRouter } from '../src/routes/bookings.js';
+import { getBookingsRouter } from '../routes/bookings.js';
 
-const BOOKINGS_PATH = path.resolve(__dirname, '../../bookings.json');
+const BOOKINGS_PATH = path.resolve(__dirname, '../../../bookings.json');
 
 describe('GET /api/bookings', () => {
   const app = express();

@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import express from 'express';
 import path from 'path';
-import { getMapRouter } from '../src/routes/map.js';
-import { parseMap } from '../src/mapParser.js';
+import { getMapRouter } from '../routes/map.js';
+import { parseMap } from '../mapParser.js';
 
-const MAP_PATH = path.resolve(__dirname, '../../map.ascii');
+const MAP_PATH = path.resolve(__dirname, '../../../map.ascii');
 
 describe('parseMap', () => { 
   it('assigns id to every cabana cell', () => {
@@ -75,14 +75,18 @@ describe('GET /api/map', () => {
 
   it('every cell has a valid type', async () => {
     const res = await fetch(`${baseUrl}/api/map`);
-    const body = await res.json() as { rows: number; cols: number; grid: { type: string }[][] };
+    const body = await res.json() as {
+      rows: number; cols: number; grid: { type: string }[][];
+    };
     const validTypes = new Set(['empty', 'cabana', 'pool', 'path', 'chalet']);
     body.grid.flat().forEach((cell) => expect(validTypes.has(cell.type)).toBe(true));
   });
 
   it('cabana cells have an id in W_row_col format', async () => {
     const res = await fetch(`${baseUrl}/api/map`);
-    const body = await res.json() as { rows: number; cols: number; grid: { type: string; id?: string }[][] };
+    const body = await res.json() as {
+      rows: number; cols: number; grid: { type: string; id?: string }[][];
+    };
     const cabanas = body.grid.flat().filter((c) => c.type === 'cabana');
     expect(cabanas.length).toBeGreaterThan(0);
     cabanas.forEach((c) => expect(c.id).toMatch(/^W_\d+_\d+$/));

@@ -2,11 +2,21 @@
   "name": "resort-map",
   "version": "1.0.0",
   "private": true,
-  "workspaces": ["backend", "frontend"],
+  "type": "module",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
     "test": "npm run test -w backend && npm run test -w frontend"
   },
   "devDependencies": {
-    "concurrently": "^9.0.0"
+    "@eslint/js": "^9.39.4",
+    "concurrently": "^9.0.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "typescript-eslint": "^8.59.2"
   }
 }

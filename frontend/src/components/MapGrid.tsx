@@ -8,7 +8,6 @@ const STATIC_TILES: Record<string, string> = {
   chalet: '/assets/houseChimney.png',
 };
 
-
 function getPathTile(
   grid: Cell[][],
   row: number,
@@ -58,7 +57,7 @@ function getPathTile(
     return { src: '/assets/arrowCornerSquare.png', rotation };
   }
 
-  // 1 connected + 3 empty → dead-end; rotate so the connected side aligns with base (bottom)
+  // 1 connected + 3 empty → dead-end; rotate so connected side aligns with base (bottom)
   if (n === 1) {
     const rotation = downC ? 0 : leftC ? 90 : topC ? 180 : 270;
     return { src: '/assets/arrowEnd.png', rotation };
@@ -84,7 +83,8 @@ export function MapGrid({ grid, bookedCabanas, onCabanaClick }: MapGridProps) {
       {grid.map((row, rowIndex) =>
         row.map((cell, colIndex) => {
           const isCabana = cell.type === 'cabana';
-          const isBooked = isCabana && cell.id !== undefined && bookedCabanas.has(cell.id);
+          const isBooked =
+            isCabana && cell.id !== undefined && bookedCabanas.has(cell.id);
 
           let src: string;
           let rotation = 0;
