@@ -48,6 +48,22 @@
   cursor: pointer;
 }
 
+/* ── Booking alert ── */
+
+.booking-alert {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2a7a2a;
+  color: #fff;
+  padding: 0.6rem 1.4rem;
+  border-radius: 6px;
+  font-weight: 600;
+  z-index: 20;
+  pointer-events: none;
+}
+
 /* ── MapGrid ── */
 
 .map-grid {

@@ -99,7 +99,7 @@ describe('App booking flow', () => {
     expect(screen.getByTestId('booked-overlay')).toBeInTheDocument();
   });
 
-  it('shows CabanaStatus with booking details on booked cabana click', async () => {
+  it('shows CabanaStatus on booked cabana click', async () => {
     render(<App />);
     await waitFor(() => screen.getByAltText('cabana'));
 

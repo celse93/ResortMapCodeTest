@@ -10,6 +10,7 @@ export default function App() {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [bookedCabanas, setBookedCabanas] = useState<Set<string>>(new Set());
   const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
+  const [showBookingAlert, setShowBookingAlert] = useState(false);
 
   useEffect(() => {
     fetch('/api/map')
@@ -25,6 +26,8 @@ export default function App() {
   function handleBookingSuccess(cabanaId: string) {
     setBookedCabanas((prev) => new Set(prev).add(cabanaId));
     setSelectedCell(null);
+    setShowBookingAlert(true);
+    setTimeout(() => setShowBookingAlert(false), 2000);
   }
 
   function handleClose() {
@@ -43,6 +46,9 @@ export default function App() {
 
   return (
     <div className="app">
+      {showBookingAlert && (
+        <div className="booking-alert" role="alert">Booking confirmed</div>
+      )}
       <h1>Resort Cabana Map</h1>
       <MapGrid
         grid={mapData.grid}
