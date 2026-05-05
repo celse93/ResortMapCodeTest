@@ -73,7 +73,7 @@ npm test --workspaces
 
 ---
 
-## Design Decisions
+## Decisions
 
 The backend keeps a dedicated `routes/` directory so each API lives in its own file. This keeps `index.ts` thin and makes it straightforward to add or change routes without touching unrelated code.
 
