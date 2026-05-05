@@ -8,22 +8,7 @@ const STATIC_TILES: Record<string, string> = {
   chalet: '/assets/houseChimney.png',
 };
 
-// Selects the correct path asset and CSS clockwise rotation for a '#' tile by examining
-// its four cardinal neighbours. A neighbour counts as "connected" when it is path, chalet,
-// or cabana; anything else (.  p  or out-of-bounds) counts as empty.
-//
-// Base image orientations (0 °):
-//   arrowStraight    – vertical (top ↔ bottom)
-//   arrowCornerSquare – L-corner connecting top + right (N+E bend at bottom-left of tile)
-//   arrowSplit       – ├  (top + bottom + right connected; left is the open/empty side)
-//   arrowEnd         – tip pointing up, connection at bottom
-//   arrowCrossing    – symmetric ✛, no rotation needed
-//
-// Rotation rules (degrees CW):
-//   arrowStraight:     0° vertical | 90° horizontal
-//   arrowCornerSquare: N+E→0°  E+S→90°  S+W→180°  W+N→270°
-//   arrowSplit:        missing-left→0°  missing-top→90°  missing-right→180°  missing-bottom→270°
-//   arrowEnd:          bottom-conn→0°  left-conn→90°  top-conn→180°  right-conn→270°
+
 function getPathTile(
   grid: Cell[][],
   row: number,

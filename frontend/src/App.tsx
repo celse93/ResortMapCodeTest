@@ -8,7 +8,8 @@ import './App.css';
 export default function App() {
   const [mapData, setMapData] = useState<MapData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [bookedCabanas, setBookedCabanas] = useState<Map<string, CabanaBooking>>(new Map());
+  const [bookedCabanas, setBookedCabanas] =
+    useState<Map<string, CabanaBooking>>(new Map());
   const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
 
   useEffect(() => {

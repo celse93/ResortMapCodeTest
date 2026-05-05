@@ -70,7 +70,7 @@ describe('POST /api/bookings', () => {
     expect(body).toEqual({ error: 'Invalid guest' });
   });
 
-  it('accepts a valid guest with differently-cased name', async () => {
+  it('accepts a valid guest with cased-insensitive name', async () => {
     const res = await fetch(`${baseUrl}/api/bookings`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

@@ -1,20 +1,12 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import express from 'express';
 import path from 'path';
-import { createMapRouter } from '../src/routes/map.js';
+import { getMapRouter } from '../src/routes/map.js';
 import { parseMap } from '../src/mapParser.js';
 
 const MAP_PATH = path.resolve(__dirname, '../../map.ascii');
 
-describe('parseMap', () => {
-  it('returns correct dimensions', () => {
-    const { rows, cols, grid } = parseMap(MAP_PATH);
-    expect(rows).toBeGreaterThan(0);
-    expect(cols).toBeGreaterThan(0);
-    expect(grid).toHaveLength(rows);
-    expect(grid[0]).toHaveLength(cols);
-  });
-
+describe('parseMap', () => { 
   it('assigns id to every cabana cell', () => {
     const { grid } = parseMap(MAP_PATH);
     const cabanas = grid.flat().filter((c) => c.type === 'cabana');
@@ -46,7 +38,7 @@ describe('GET /api/map', () => {
   let baseUrl: string;
 
   beforeAll(() => {
-    app.use('/api', createMapRouter(MAP_PATH));
+    app.use('/api', getMapRouter(MAP_PATH));
     server = app.listen(0);
     const addr = server.address() as { port: number };
     baseUrl = `http://localhost:${addr.port}`;

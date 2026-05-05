@@ -38,7 +38,10 @@ describe('BookingForm successful submission', () => {
     render(<BookingForm cell={cabanaCell} onSuccess={onSuccess} onCancel={vi.fn()} />);
 
     fireEvent.change(screen.getByLabelText(/room number/i), { target: { value: '101' } });
-    fireEvent.change(screen.getByLabelText(/guest name/i), { target: { value: 'Alice Smith' } });
+    fireEvent.change(
+      screen.getByLabelText(/guest name/i),
+      { target: { value: 'Alice Smith' } },
+    );
     fireEvent.click(screen.getByRole('button', { name: /confirm/i }));
 
     await waitFor(() => expect(onSuccess).toHaveBeenCalledOnce());
@@ -57,7 +60,10 @@ describe('BookingForm failed submission', () => {
     render(<BookingForm cell={cabanaCell} onSuccess={vi.fn()} onCancel={vi.fn()} />);
 
     fireEvent.change(screen.getByLabelText(/room number/i), { target: { value: '999' } });
-    fireEvent.change(screen.getByLabelText(/guest name/i), { target: { value: 'Unknown' } });
+    fireEvent.change(
+      screen.getByLabelText(/guest name/i),
+      { target: { value: 'Unknown' } },
+    );
     fireEvent.click(screen.getByRole('button', { name: /confirm/i }));
 
     await waitFor(() =>
@@ -70,7 +76,10 @@ describe('BookingForm failed submission', () => {
     render(<BookingForm cell={cabanaCell} onSuccess={vi.fn()} onCancel={vi.fn()} />);
 
     fireEvent.change(screen.getByLabelText(/room number/i), { target: { value: '101' } });
-    fireEvent.change(screen.getByLabelText(/guest name/i), { target: { value: 'Alice' } });
+    fireEvent.change(
+      screen.getByLabelText(/guest name/i),
+      { target: { value: 'Alice' } },
+    );
     fireEvent.click(screen.getByRole('button', { name: /confirm/i }));
 
     await waitFor(() =>
@@ -80,7 +89,7 @@ describe('BookingForm failed submission', () => {
 });
 
 describe('BookingForm loading state', () => {
-  it('disables the submit button and shows "Booking…" while the request is in-flight', async () => {
+  it('disables submit and shows "Booking…" while request is in-flight', async () => {
     const onSuccess = vi.fn();
     let settle!: () => void;
     vi.stubGlobal('fetch', vi.fn(() =>
@@ -91,7 +100,10 @@ describe('BookingForm loading state', () => {
     render(<BookingForm cell={cabanaCell} onSuccess={onSuccess} onCancel={vi.fn()} />);
 
     fireEvent.change(screen.getByLabelText(/room number/i), { target: { value: '101' } });
-    fireEvent.change(screen.getByLabelText(/guest name/i), { target: { value: 'Alice' } });
+    fireEvent.change(
+      screen.getByLabelText(/guest name/i),
+      { target: { value: 'Alice' } },
+    );
     fireEvent.click(screen.getByRole('button', { name: /confirm/i }));
 
     await waitFor(() =>

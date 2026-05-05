@@ -46,7 +46,9 @@ describe('App loading and error states', () => {
   it('renders title and grid tiles after successful fetch', async () => {
     stubFetch(singleCabanaMap);
     render(<App />);
-    await waitFor(() => expect(screen.getByText('Resort Cabana Map')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('Resort Cabana Map')).toBeInTheDocument(),
+    );
     expect(screen.getAllByRole('img')).toHaveLength(1);
   });
 });
@@ -81,26 +83,36 @@ describe('App overlay: open and close', () => {
 describe('App booking flow', () => {
   beforeEach(() => stubFetch(singleCabanaMap));
 
-  it('closes panel and dims cabana after successful booking', async () => {
+  it('closes panel and turns cabana red after successful booking', async () => {
     render(<App />);
     await waitFor(() => screen.getByAltText('cabana'));
     fireEvent.click(screen.getByAltText('cabana'));
     fireEvent.change(screen.getByLabelText(/room number/i), { target: { value: '101' } });
-    fireEvent.change(screen.getByLabelText(/guest name/i), { target: { value: 'Alice Smith' } });
+    fireEvent.change(
+      screen.getByLabelText(/guest name/i),
+      { target: { value: 'Alice Smith' } },
+    );
     fireEvent.click(screen.getByText('Confirm'));
-    await waitFor(() => expect(screen.queryByText('Book Cabana')).not.toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.queryByText('Book Cabana')).not.toBeInTheDocument(),
+    );
     expect(screen.getByTestId('booked-overlay')).toBeInTheDocument();
   });
 
-  it('shows CabanaStatus with booking details when a booked cabana is clicked', async () => {
+  it('shows CabanaStatus with booking details on booked cabana click', async () => {
     render(<App />);
     await waitFor(() => screen.getByAltText('cabana'));
 
     fireEvent.click(screen.getByAltText('cabana'));
     fireEvent.change(screen.getByLabelText(/room number/i), { target: { value: '101' } });
-    fireEvent.change(screen.getByLabelText(/guest name/i), { target: { value: 'Alice Smith' } });
+    fireEvent.change(
+      screen.getByLabelText(/guest name/i),
+      { target: { value: 'Alice Smith' } },
+    );
     fireEvent.click(screen.getByText('Confirm'));
-    await waitFor(() => expect(screen.queryByText('Book Cabana')).not.toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.queryByText('Book Cabana')).not.toBeInTheDocument(),
+    );
 
     fireEvent.click(screen.getByAltText('cabana'));
     expect(screen.getByText('Cabana Unavailable')).toBeInTheDocument();

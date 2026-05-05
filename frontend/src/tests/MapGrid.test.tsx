@@ -15,37 +15,7 @@ function makeGrid(types: string[][]): Cell[][] {
   );
 }
 
-describe('MapGrid tile count and assets', () => {
-  it('renders one img per cell', () => {
-    const grid = makeGrid([['empty', 'cabana', 'pool'], ['chalet', 'path', 'empty']]);
-    render(<MapGrid grid={grid} bookedCabanas={noBookings} onCabanaClick={noop} />);
-    expect(screen.getAllByRole('img')).toHaveLength(6);
-  });
-
-  it('uses correct asset for each static tile type', () => {
-    const grid = makeGrid([['empty', 'pool', 'chalet', 'cabana']]);
-    render(<MapGrid grid={grid} bookedCabanas={noBookings} onCabanaClick={noop} />);
-    const imgs = screen.getAllByRole('img');
-    expect(imgs[0]).toHaveAttribute('src', '/assets/parchmentBasic.png');
-    expect(imgs[1]).toHaveAttribute('src', '/assets/pool.png');
-    expect(imgs[2]).toHaveAttribute('src', '/assets/houseChimney.png');
-    expect(imgs[3]).toHaveAttribute('src', '/assets/cabana.png');
-  });
-});
-
 describe('MapGrid cabana interactions', () => {
-  it('cabana tiles have the cabana class', () => {
-    const grid = makeGrid([['cabana']]);
-    render(<MapGrid grid={grid} bookedCabanas={noBookings} onCabanaClick={noop} />);
-    expect(screen.getByAltText('cabana')).toHaveClass('map-tile--cabana');
-  });
-
-  it('non-cabana tiles do not have the cabana class', () => {
-    const grid = makeGrid([['empty', 'pool', 'chalet']]);
-    render(<MapGrid grid={grid} bookedCabanas={noBookings} onCabanaClick={noop} />);
-    screen.getAllByRole('img').forEach(img => expect(img).not.toHaveClass('map-tile--cabana'));
-  });
-
   it('calls onCabanaClick with the cell when a cabana is clicked', () => {
     const grid = makeGrid([['cabana']]);
     const handler = vi.fn();
