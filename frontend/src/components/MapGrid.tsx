@@ -1,5 +1,5 @@
 import '../App.css';
-import type { Cell, CabanaBooking } from '../types/map';
+import type { Cell } from '../types/map';
 
 const STATIC_TILES: Record<string, string> = {
   empty: '/assets/parchmentBasic.png',
@@ -68,7 +68,7 @@ function getPathTile(
 
 interface MapGridProps {
   grid: Cell[][];
-  bookedCabanas: Map<string, CabanaBooking>;
+  bookedCabanas: Set<string>;
   onCabanaClick: (cell: Cell) => void;
 }
 

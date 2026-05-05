@@ -116,7 +116,6 @@ describe('App booking flow', () => {
 
     fireEvent.click(screen.getByAltText('cabana'));
     expect(screen.getByText('Cabana Unavailable')).toBeInTheDocument();
-    expect(screen.getByText('Room: 101')).toBeInTheDocument();
-    expect(screen.getByText('Guest: Alice Smith')).toBeInTheDocument();
+    expect(screen.getByText('This cabana is already booked.')).toBeInTheDocument();
   });
 });

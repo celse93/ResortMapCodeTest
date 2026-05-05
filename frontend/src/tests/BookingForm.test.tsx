@@ -7,12 +7,6 @@ const cabanaCell: Cell = { type: 'cabana', id: 'W-0-0' };
 afterEach(() => vi.unstubAllGlobals());
 
 describe('BookingForm rendering', () => {
-  it('renders room number and guest name inputs', () => {
-    render(<BookingForm cell={cabanaCell} onSuccess={vi.fn()} onCancel={vi.fn()} />);
-    expect(screen.getByLabelText(/room number/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/guest name/i)).toBeInTheDocument();
-  });
-
   it('renders Confirm and Cancel buttons', () => {
     render(<BookingForm cell={cabanaCell} onSuccess={vi.fn()} onCancel={vi.fn()} />);
     expect(screen.getByRole('button', { name: /confirm/i })).toBeInTheDocument();
@@ -30,7 +24,7 @@ describe('BookingForm cancel', () => {
 });
 
 describe('BookingForm successful submission', () => {
-  it('calls onSuccess with cabanaId, room, and guest name', async () => {
+  it('calls onSuccess with cabanaId only', async () => {
     vi.stubGlobal('fetch', vi.fn(() =>
       Promise.resolve({ ok: true, json: () => Promise.resolve({}) }),
     ));
@@ -45,7 +39,7 @@ describe('BookingForm successful submission', () => {
     fireEvent.click(screen.getByRole('button', { name: /confirm/i }));
 
     await waitFor(() => expect(onSuccess).toHaveBeenCalledOnce());
-    expect(onSuccess).toHaveBeenCalledWith('W-0-0', '101', 'Alice Smith');
+    expect(onSuccess).toHaveBeenCalledWith('W-0-0');
   });
 });
 

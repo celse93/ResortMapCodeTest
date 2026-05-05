@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react';
 import { MapGrid } from './components/MapGrid';
 import { BookingForm } from './components/BookingForm';
 import { CabanaStatus } from './components/CabanaStatus';
-import type { Cell, MapData, CabanaBooking } from './types/map';
+import type { Cell, MapData } from './types/map';
 import './App.css';
 
 export default function App() {
   const [mapData, setMapData] = useState<MapData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [bookedCabanas, setBookedCabanas] =
-    useState<Map<string, CabanaBooking>>(new Map());
+  const [bookedCabanas, setBookedCabanas] = useState<Set<string>>(new Set());
   const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
 
   useEffect(() => {
@@ -23,12 +22,8 @@ export default function App() {
     setSelectedCell(cell);
   }
 
-  function handleBookingSuccess(cabanaId: string, room: string, guestName: string) {
-    setBookedCabanas((prev) => {
-      const next = new Map(prev);
-      next.set(cabanaId, { room, guestName });
-      return next;
-    });
+  function handleBookingSuccess(cabanaId: string) {
+    setBookedCabanas((prev) => new Set(prev).add(cabanaId));
     setSelectedCell(null);
   }
 
@@ -58,10 +53,7 @@ export default function App() {
         <div className="overlay" onClick={handleClose}>
           <div className="panel" onClick={(e) => e.stopPropagation()}>
             {isBooked ? (
-              <CabanaStatus
-                booking={bookedCabanas.get(selectedCell.id!)!}
-                onClose={handleClose}
-              />
+              <CabanaStatus onClose={handleClose} />
             ) : (
               <BookingForm
                 cell={selectedCell}

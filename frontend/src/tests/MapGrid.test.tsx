@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { MapGrid } from '../components/MapGrid';
 import type { Cell } from '../types/map';
 
-const noBookings = new Map();
+const noBookings = new Set<string>();
 const noop = vi.fn();
 
 function makeGrid(types: string[][]): Cell[][] {
@@ -37,7 +37,7 @@ describe('MapGrid cabana interactions', () => {
 describe('MapGrid booked cabana appearance', () => {
   it('renders a red overlay on a booked cabana', () => {
     const grid: Cell[][] = [[{ type: 'cabana', id: 'C1' }]];
-    const booked = new Map([['C1', { room: '101', guestName: 'Alice' }]]);
+    const booked = new Set(['C1']);
     render(<MapGrid grid={grid} bookedCabanas={booked} onCabanaClick={noop} />);
     expect(screen.getByTestId('booked-overlay')).toBeInTheDocument();
   });

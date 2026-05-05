@@ -10,8 +10,3 @@ export interface MapData {
   cols: number;
   grid: Cell[][];
 }
-
-export interface CabanaBooking {
-  room: string;
-  guestName: string;
-}
