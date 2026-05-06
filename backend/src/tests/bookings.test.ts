@@ -41,10 +41,4 @@ describe('GET /api/bookings', () => {
       expect(typeof entry.guestName).toBe('string');
     });
   });
-
-  it('contains the expected number of guests', async () => {
-    const res = await fetch(`${baseUrl}/api/bookings`);
-    const body = await res.json() as unknown[];
-    expect(body).toHaveLength(100);
-  });
 });

@@ -52,3 +52,5 @@ Below is a list of key prompts used to build the solution. Beyond these, there w
 21. *"Make the necessary changes on both backend and frontend to display only one `pool.png` across the whole section of `map.ascii` where the letter 'p' is present, instead of showing multiple `pool.png` per char 'p' in the `map.ascii`."*
 
 22. *"Regarding the last prompt update `CLAUDE.md` if needed so the same approach for the pool tile may be applied to other `map.ascii` configurations."*
+
+23. *"Should this selected test be included? Because other `bookings.json` file may be used, hence the number of guests may differ from the hardcoded 100."*
