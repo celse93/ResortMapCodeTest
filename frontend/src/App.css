@@ -1,5 +1,9 @@
 #root {
+  width: 100%;
   padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
 }
 
 .app {
@@ -7,6 +11,16 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+}
+
+.app h1 {
+  margin-top: 0.335em;
+  margin-bottom: 0.335em;
+}
+
+.app h4 {
+  margin-top: 0.665em;
+  margin-bottom: 0.665em;
 }
 
 .overlay {
@@ -67,9 +81,20 @@
 /* ── MapGrid ── */
 
 .map-grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(var(--cols), 48px);
   width: fit-content;
+}
+
+.pool-overlay {
+  position: absolute;
+  left: var(--pool-left);
+  top: var(--pool-top);
+  width: var(--pool-width);
+  height: var(--pool-height);
+  pointer-events: none;
+  object-fit: fill;
 }
 
 .map-cell {

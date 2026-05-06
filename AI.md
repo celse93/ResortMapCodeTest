@@ -48,3 +48,7 @@ Below is a list of key prompts used to build the solution. Beyond these, there w
 19. *"For the booking of a cabana make the input of the guest name case-insensitive. Apply a red colour or background to a cabana when it's booked. After completing the above, review if any frontend tests need updating."*
 
 20. *"The inline styles in all frontend files should be included in the CSS files instead, and only the classes, ids, etc. should be transferred to the elements. For future reference remember about this coding pattern."*
+
+21. *"Make the necessary changes on both backend and frontend to display only one `pool.png` across the whole section of `map.ascii` where the letter 'p' is present, instead of showing multiple `pool.png` per char 'p' in the `map.ascii`."*
+
+22. *"Regarding the last prompt update `CLAUDE.md` if needed so the same approach for the pool tile may be applied to other `map.ascii` configurations."*

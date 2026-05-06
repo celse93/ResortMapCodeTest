@@ -66,6 +66,30 @@ function getPathTile(
   return { src: '/assets/arrowStraight.png', rotation: 0 };
 }
 
+const TILE_SIZE = 48;
+
+function getPoolBounds(
+  grid: Cell[][],
+): { row: number; col: number; width: number; height: number } | null {
+  let minRow = Infinity, maxRow = -Infinity, minCol = Infinity, maxCol = -Infinity;
+  let found = false;
+
+  grid.forEach((row, rowIndex) =>
+    row.forEach((cell, colIndex) => {
+      if (cell.type === 'pool') {
+        found = true;
+        if (rowIndex < minRow) minRow = rowIndex;
+        if (rowIndex > maxRow) maxRow = rowIndex;
+        if (colIndex < minCol) minCol = colIndex;
+        if (colIndex > maxCol) maxCol = colIndex;
+      }
+    }),
+  );
+
+  if (!found) return null;
+  return { row: minRow, col: minCol, width: maxCol - minCol + 1, height: maxRow - minRow + 1 };
+}
+
 interface MapGridProps {
   grid: Cell[][];
   bookedCabanas: Set<string>;
@@ -74,6 +98,7 @@ interface MapGridProps {
 
 export function MapGrid({ grid, bookedCabanas, onCabanaClick }: MapGridProps) {
   const cols = grid[0]?.length ?? 0;
+  const poolBounds = getPoolBounds(grid);
 
   return (
     <div
@@ -85,6 +110,10 @@ export function MapGrid({ grid, bookedCabanas, onCabanaClick }: MapGridProps) {
           const isCabana = cell.type === 'cabana';
           const isBooked =
             isCabana && cell.id !== undefined && bookedCabanas.has(cell.id);
+
+          if (cell.type === 'pool') {
+            return <div key={`${rowIndex}-${colIndex}`} className="map-cell" />;
+          }
 
           let src: string;
           let rotation = 0;
@@ -115,6 +144,19 @@ export function MapGrid({ grid, bookedCabanas, onCabanaClick }: MapGridProps) {
             </div>
           );
         })
+      )}
+      {poolBounds && (
+        <img
+          src="/assets/pool.png"
+          alt="pool"
+          className="pool-overlay"
+          style={{
+            '--pool-left': `${poolBounds.col * TILE_SIZE}px`,
+            '--pool-top': `${poolBounds.row * TILE_SIZE}px`,
+            '--pool-width': `${poolBounds.width * TILE_SIZE}px`,
+            '--pool-height': `${poolBounds.height * TILE_SIZE}px`,
+          } as React.CSSProperties}
+        />
       )}
     </div>
   );

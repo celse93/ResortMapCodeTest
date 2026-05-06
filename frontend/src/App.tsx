@@ -50,6 +50,7 @@ export default function App() {
         <div className="booking-alert" role="alert">Booking confirmed</div>
       )}
       <h1>Resort Cabana Map</h1>
+      <h4>Click on the poolside cabanas below and book your ideal lounging spot</h4>
       <MapGrid
         grid={mapData.grid}
         bookedCabanas={bookedCabanas}

@@ -41,10 +41,14 @@ JSON array of `{ "room": "101", "guestName": "Alice Smith" }`. 100 guests across
 |---|---|
 | `parchmentBasic.png` | Base background tile |
 | `cabana.png` | Available cabana tile |
-| `pool.png` | Pool tile |
+| `pool.png` | Single image spanning the entire pool region (see Pool rendering below) |
 | `houseChimney.png` | Chalet tile |
 | `textureWater.png` | Water/overlay |
 | `arrowStraight/Corner/Crossing/Split/End.png` | Path direction tiles (see selection rules below) |
+
+### Pool rendering
+
+All `p` cells are rendered as empty transparent `<div>` elements (no background image). The frontend computes the bounding box of all `p` cells (min/max row and col) and absolutely positions a single `pool.png` over the entire region. Cell size is 48×48px. This approach works for any rectangular pool shape or position in the map.
 
 ### Path tile selection
 
